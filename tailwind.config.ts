@@ -96,6 +96,10 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
+			boxShadow: {
+				'gold': '0 10px 30px -10px hsl(45 100% 85% / 0.3)',
+				'elegant': '0 20px 40px -15px hsl(0 0% 0% / 0.8)'
 			}
 		}
 	},
