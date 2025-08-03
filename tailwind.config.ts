@@ -61,7 +61,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom Diego Chapiero colors
+				gold: {
+					DEFAULT: 'hsl(var(--gold))',
+					dark: 'hsl(var(--gold-dark))'
+				},
+				'black-soft': 'hsl(var(--black-soft))',
+				'black-lighter': 'hsl(var(--black-lighter))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
