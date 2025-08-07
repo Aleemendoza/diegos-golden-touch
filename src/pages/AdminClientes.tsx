@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Plus, Edit, Trash2, LogOut, Calendar, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import ClienteForm from "@/components/ClienteForm";
+import Sidebar from "@/components/SideBar";
 
 // Tipo para cliente
 interface Cliente {
@@ -162,164 +163,171 @@ const AdminClientes = () => {
   const upcomingBirthdays = getUpcomingBirthdays();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex">
+      <Sidebar />
+
+      <div className="flex-1">
+      <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gradient-gold">Panel de Administración</h1>
-              <p className="text-muted-foreground">Gestión de Clientes</p>
+        <div className="border-b border-border bg-card">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-gradient-gold">Panel de Administración</h1>
+                <p className="text-muted-foreground">Gestión de Clientes</p>
+              </div>
+              <Button onClick={handleLogout} variant="outline" className="btn-outline-gold">
+                <LogOut className="w-4 h-4 mr-2" />
+                Cerrar Sesión
+              </Button>
             </div>
-            <Button onClick={handleLogout} variant="outline" className="btn-outline-gold">
-              <LogOut className="w-4 h-4 mr-2" />
-              Cerrar Sesión
-            </Button>
           </div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        {/* Cumpleaños Próximos */}
-        {upcomingBirthdays.length > 0 && (
+        <div className="container mx-auto px-4 py-8 space-y-8">
+          {/* Cumpleaños Próximos */}
+          {upcomingBirthdays.length > 0 && (
+            <Card className="card-elegant">
+              <CardHeader>
+                <CardTitle className="flex items-center text-gold">
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Cumpleaños Próximos
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {upcomingBirthdays.map((cliente) => (
+                    <div key={cliente.id} className="p-4 bg-black-soft rounded-lg border border-gold/20">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-foreground">
+                            {cliente.nombre} {cliente.apellido}
+                          </p>
+                          <p className="text-sm text-muted-foreground">{cliente.fecha_cumple}</p>
+                        </div>
+                        <Badge variant="secondary" className="bg-gold/20 text-gold">
+                          {cliente.daysUntil === 0 ? "Hoy" : `${cliente.daysUntil} días`}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Lista de Clientes */}
           <Card className="card-elegant">
             <CardHeader>
-              <CardTitle className="flex items-center text-gold">
-                <Calendar className="w-5 h-5 mr-2" />
-                Cumpleaños Próximos
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {upcomingBirthdays.map((cliente) => (
-                  <div key={cliente.id} className="p-4 bg-black-soft rounded-lg border border-gold/20">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold text-foreground">
-                          {cliente.nombre} {cliente.apellido}
-                        </p>
-                        <p className="text-sm text-muted-foreground">{cliente.fecha_cumple}</p>
-                      </div>
-                      <Badge variant="secondary" className="bg-gold/20 text-gold">
-                        {cliente.daysUntil === 0 ? "Hoy" : `${cliente.daysUntil} días`}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center text-gold">
+                  <User className="w-5 h-5 mr-2" />
+                  Clientes ({filteredClientes.length})
+                </CardTitle>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="btn-gold" onClick={() => setEditingCliente(null)}>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Agregar Cliente
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="bg-card border-border">
+                    <DialogHeader>
+                      <DialogTitle className="text-gold">
+                        {editingCliente ? "Editar Cliente" : "Agregar Nuevo Cliente"}
+                      </DialogTitle>
+                    </DialogHeader>
+                    <ClienteForm
+                      cliente={editingCliente}
+                      onSubmit={editingCliente ? handleEditCliente : handleAddCliente}
+                      onCancel={() => setIsDialogOpen(false)}
+                    />
+                  </DialogContent>
+                </Dialog>
               </div>
+            </CardHeader>
+            
+            <CardContent>
+              {/* Búsqueda */}
+              <div className="mb-6">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-5 h-5" />
+                  <Input
+                    placeholder="Buscar por nombre o apellido..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="input-elegant pl-10"
+                  />
+                </div>
+              </div>
+
+              {/* Tabla */}
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-gold">Nombre</TableHead>
+                      <TableHead className="text-gold">Apellido</TableHead>
+                      <TableHead className="text-gold">Cumpleaños</TableHead>
+                      <TableHead className="text-gold">Servicios</TableHead>
+                      <TableHead className="text-gold">Acciones</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredClientes.map((cliente) => (
+                      <TableRow key={cliente.id} className="hover:bg-black-soft/30">
+                        <TableCell className="font-medium">{cliente.nombre}</TableCell>
+                        <TableCell>{cliente.apellido}</TableCell>
+                        <TableCell>{cliente.fecha_cumple}</TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">
+                            {cliente.historial.length} servicio(s)
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex space-x-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setEditingCliente(cliente);
+                                setIsDialogOpen(true);
+                              }}
+                              className="border-gold/30 text-gold hover:bg-gold/10"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleDeleteCliente(cliente.id)}
+                              className="border-destructive/30 text-destructive hover:bg-destructive/10"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {filteredClientes.length === 0 && (
+                <div className="text-center py-12">
+                  <User className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    {searchTerm ? "No se encontraron clientes" : "No hay clientes registrados"}
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
-        )}
-
-        {/* Lista de Clientes */}
-        <Card className="card-elegant">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center text-gold">
-                <User className="w-5 h-5 mr-2" />
-                Clientes ({filteredClientes.length})
-              </CardTitle>
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="btn-gold" onClick={() => setEditingCliente(null)}>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Agregar Cliente
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-card border-border">
-                  <DialogHeader>
-                    <DialogTitle className="text-gold">
-                      {editingCliente ? "Editar Cliente" : "Agregar Nuevo Cliente"}
-                    </DialogTitle>
-                  </DialogHeader>
-                  <ClienteForm
-                    cliente={editingCliente}
-                    onSubmit={editingCliente ? handleEditCliente : handleAddCliente}
-                    onCancel={() => setIsDialogOpen(false)}
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-          </CardHeader>
-          
-          <CardContent>
-            {/* Búsqueda */}
-            <div className="mb-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gold w-5 h-5" />
-                <Input
-                  placeholder="Buscar por nombre o apellido..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="input-elegant pl-10"
-                />
-              </div>
-            </div>
-
-            {/* Tabla */}
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-gold">Nombre</TableHead>
-                    <TableHead className="text-gold">Apellido</TableHead>
-                    <TableHead className="text-gold">Cumpleaños</TableHead>
-                    <TableHead className="text-gold">Servicios</TableHead>
-                    <TableHead className="text-gold">Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredClientes.map((cliente) => (
-                    <TableRow key={cliente.id} className="hover:bg-black-soft/30">
-                      <TableCell className="font-medium">{cliente.nombre}</TableCell>
-                      <TableCell>{cliente.apellido}</TableCell>
-                      <TableCell>{cliente.fecha_cumple}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">
-                          {cliente.historial.length} servicio(s)
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex space-x-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => {
-                              setEditingCliente(cliente);
-                              setIsDialogOpen(true);
-                            }}
-                            className="border-gold/30 text-gold hover:bg-gold/10"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleDeleteCliente(cliente.id)}
-                            className="border-destructive/30 text-destructive hover:bg-destructive/10"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-
-            {filteredClientes.length === 0 && (
-              <div className="text-center py-12">
-                <User className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">
-                  {searchTerm ? "No se encontraron clientes" : "No hay clientes registrados"}
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        </div>
+      </div>
       </div>
     </div>
+
   );
 };
 
