@@ -36,7 +36,7 @@ const AboutSection = () => {
             
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                Con más de 20 años de experiencia, <span className="text-gold font-semibold">Diego Chapiero Estilista</span> ofrece servicios de peluquería de alta calidad en un ambiente elegante y acogedor.
+                Con más de 20 años de experiencia, <span className="text-gold font-semibold">Diego Chiappero Estilista</span> ofrece servicios de peluquería de alta calidad en un ambiente elegante y acogedor.
               </p>
               
               <p>

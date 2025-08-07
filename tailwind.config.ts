@@ -62,7 +62,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom Diego Chapiero colors
+				// Custom Diego Chiappero colors
 				gold: {
 					DEFAULT: 'hsl(var(--gold))',
 					dark: 'hsl(var(--gold-dark))'
