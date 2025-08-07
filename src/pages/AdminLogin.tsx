@@ -107,7 +107,7 @@ const AdminLogin = () => {
           {/* Development note */}
           <div className="mt-6 p-4 bg-gold/10 rounded-lg border border-gold/20">
             <p className="text-xs text-gold/80 text-center">
-              <strong>Demo:</strong> admin@diegochapiero.com / admin123
+              <strong>Demo:</strong> admin@diegochiappero.com / admin123
             </p>
             <p className="text-xs text-muted-foreground text-center mt-1">
               (Login mock - se reemplazará con Supabase Auth)
