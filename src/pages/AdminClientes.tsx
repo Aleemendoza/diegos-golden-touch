@@ -195,7 +195,7 @@ const AdminClientes = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {upcomingBirthdays.map((cliente) => (
                     <div key={cliente.id} className="p-4 bg-black-soft rounded-lg border border-gold/20">
                       <div className="flex items-center justify-between">
@@ -262,8 +262,8 @@ const AdminClientes = () => {
               </div>
 
               {/* Tabla */}
-              <div className="overflow-x-auto">
-                <Table>
+              <div className="overflow-x-auto w-full">
+                <Table className="min-w-[600px]">
                   <TableHeader>
                     <TableRow>
                       <TableHead className="text-gold">Nombre</TableHead>
