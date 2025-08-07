@@ -19,7 +19,7 @@ const AdminLogin = () => {
     
     // TODO: Conectar con Supabase Auth cuando esté disponible
     // Por ahora, login mock para un solo admin como especificado
-    if (credentials.email === "admin@diegochapiero.com" && credentials.password === "admin123") {
+    if (credentials.email === "admin@diegochiappero.com" && credentials.password === "admin123") {
       localStorage.setItem("adminLoggedIn", "true");
       toast({
         title: "Inicio de sesión exitoso",
@@ -56,7 +56,7 @@ const AdminLogin = () => {
             <Lock className="w-8 h-8 text-gold" />
           </div>
           <CardTitle className="text-2xl text-gradient-gold">Panel de Administración</CardTitle>
-          <p className="text-muted-foreground">Diego Chapiero Estilista</p>
+          <p className="text-muted-foreground">Diego Chiappero Estilista</p>
         </CardHeader>
         
         <CardContent>
@@ -74,7 +74,7 @@ const AdminLogin = () => {
                   value={credentials.email}
                   onChange={handleChange}
                   className="input-elegant pl-10"
-                  placeholder="admin@diegochapiero.com"
+                  placeholder="admin@diegochiappero.com"
                   required
                 />
               </div>

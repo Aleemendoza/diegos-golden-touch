@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="md:col-span-2">
             <div className="text-2xl font-bold text-gradient-gold mb-4">
-              Diego Chapiero
+              Diego Chiappero
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
               Más de 20 años creando estilos únicos y realzando la belleza natural de nuestros clientes en un ambiente elegante y profesional.
@@ -60,7 +60,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2025 Diego Chapiero Estilista. Todos los derechos reservados.
+            © 2025 Diego Chiappero Estilista. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-gold transition-colors text-sm">

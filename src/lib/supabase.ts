@@ -1,4 +1,4 @@
-// Configuración de Supabase para Diego Chapiero Estilista
+// Configuración de Supabase para Diego Chiappero Estilista
 // TODO: Conectar cuando se active la integración de Supabase
 
 /*

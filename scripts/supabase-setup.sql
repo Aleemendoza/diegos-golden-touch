@@ -1,4 +1,4 @@
--- Scripts de configuración para Diego Chapiero Estilista
+-- Scripts de configuración para Diego Chiappero Estilista
 -- Ejecutar estos scripts en Supabase SQL Editor
 
 -- 1. Crear tabla de clientes
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.usuarios (
 
 -- 3. Insertar usuario admin por defecto
 INSERT INTO public.usuarios (email, nombre, rol) 
-VALUES ('admin@diegochapiero.com', 'Diego Chapiero', 'admin')
+VALUES ('admin@diegochapiero.com', 'Diego Chiappero', 'admin')
 ON CONFLICT (email) DO NOTHING;
 
 -- 4. Crear algunos clientes de ejemplo

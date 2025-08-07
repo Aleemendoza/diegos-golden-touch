@@ -1,4 +1,4 @@
-# Scripts de Configuración - Diego Chapiero Estilista
+# Scripts de Configuración - Diego Chiappero Estilista
 
 ## 🚀 Pasos para Configurar Supabase
 
